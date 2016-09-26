@@ -13,4 +13,16 @@ class Counter(models.Model):
     def get_web_page(self):
         response = urllib.request.urlopen(self.web_page)
         content_page = response.read()
-        return content_page
+        return str(content_page)
+
+    def count_words(self, content_page):
+        word_list = content_page.split()
+        word_frequence = 0
+
+        for word in word_list:
+            if self.word in word:
+                word_frequence += 1
+
+        self.count = word_frequence
+        self.save()
+
