@@ -32,9 +32,12 @@ def get_counter(request):
         form = request.POST
         web_page = form.get('web_page')
         word = form.get('word')
+
         counter = Counter.objects.create(web_page=web_page, word=word)
-        counter.get_web_page()
         counter.save()
+
+        content_page = counter.get_web_page()
+        counter.count_words(content_page)
 
         serializer = CounterSerializer(counter)
         return JSONResponse(serializer.data)
