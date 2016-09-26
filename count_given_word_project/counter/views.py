@@ -15,9 +15,6 @@ class JSONResponse(HttpResponse):
         super(JSONResponse, self).__init__(content, **kwargs)
 
 def counter_list(request):
-    """
-    List all code snippets, or create a new snippet.
-    """
     if request.method == 'GET':
         counters = Counter.objects.all()
         serializer = CounterSerializer(counters, many=True)
