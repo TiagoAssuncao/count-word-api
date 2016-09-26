@@ -30,8 +30,12 @@ def counter_list(request):
 def get_counter(request):
     if request.method == 'POST':
         form = request.POST
-        counters = Counter.objects.all()
-        serializer = CounterSerializer(counters, many=True)
+        web_page = form.get('web_page')
+        word = form.get('word')
+        counter = Counter.objects.create(web_page=web_page, word=word)
+        counter.save()
+
+        serializer = CounterSerializer(counter)
         return JSONResponse(serializer.data)
 
     else:
