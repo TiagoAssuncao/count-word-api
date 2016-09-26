@@ -13,3 +13,26 @@ class JSONResponse(HttpResponse):
         content = JSONRenderer().render(data)
         kwargs['content_type'] = 'application/json'
         super(JSONResponse, self).__init__(content, **kwargs)
+
+def counter_list(request):
+    """
+    List all code snippets, or create a new snippet.
+    """
+    if request.method == 'GET':
+        counters = Counter.objects.all()
+        serializer = CounterSerializer(counters, many=True)
+        return JSONResponse(serializer.data)
+
+    elif request.method == 'POST':
+        return JSONResponse(serializer.errors, status=400)
+
+@csrf_exempt
+def get_counter(request):
+    if request.method == 'POST':
+        form = request.POST
+        counters = Counter.objects.all()
+        serializer = CounterSerializer(counters, many=True)
+        return JSONResponse(serializer.data)
+
+    else:
+        return JSONResponse(serializer.errors, status=400)
