@@ -17,5 +17,6 @@ from django.conf.urls import url, include
 from django.contrib import admin
 
 urlpatterns = [
-    url(r'^', include('counter.urls')),
+    url(r'^counters/', include('counter.urls')),
+    url(r'^', include('home.urls')),
 ]
