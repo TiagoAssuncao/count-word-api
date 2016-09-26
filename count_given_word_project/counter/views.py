@@ -33,6 +33,7 @@ def get_counter(request):
         web_page = form.get('web_page')
         word = form.get('word')
         counter = Counter.objects.create(web_page=web_page, word=word)
+        counter.get_web_page()
         counter.save()
 
         serializer = CounterSerializer(counter)
